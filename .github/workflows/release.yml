@@ -13,13 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 11.13.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: pnpm
@@ -35,6 +35,8 @@ jobs:
           pnpm --filter typed-policy-express pack --pack-destination ../../release-artifacts
           pnpm --filter typed-policy-testkit pack --pack-destination ../../release-artifacts
       - name: Create GitHub release
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" release-artifacts/*.tgz --generate-notes --verify-tag
+        uses: softprops/action-gh-release@v3
+        with:
+          fail_on_unmatched_files: true
+          files: release-artifacts/*.tgz
+          generate_release_notes: true
