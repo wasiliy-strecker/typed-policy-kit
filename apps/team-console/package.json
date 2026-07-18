@@ -1,0 +1,26 @@
+{
+  "name": "@typed-policy/team-console",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Multi-tenant issue console demonstrating shared React and Express authorization",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "vite build && tsup src/server/index.ts --format esm --out-dir dist/server --sourcemap --clean=false",
+    "dev": "concurrently --kill-others --names API,WEB --prefix-colors cyan,magenta \"tsx watch src/server/index.ts\" \"vite --host 127.0.0.1\"",
+    "lint": "eslint src test e2e vite.config.ts vitest.config.ts playwright.config.ts",
+    "start": "node dist/server/index.js",
+    "test": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:types": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "typed-policy-core": "workspace:*",
+    "typed-policy-express": "workspace:*",
+    "typed-policy-react": "workspace:*"
+  }
+}

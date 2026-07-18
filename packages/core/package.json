@@ -1,0 +1,45 @@
+{
+  "name": "typed-policy-core",
+  "version": "0.1.0",
+  "description": "Framework-independent, type-safe RBAC and contextual authorization engine",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wasiliy-strecker/typed-policy-kit.git",
+    "directory": "packages/core"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --sourcemap --clean",
+    "lint": "eslint src test",
+    "pack:check": "publint && attw --pack .",
+    "test": "vitest run --coverage",
+    "test:types": "tsd",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  }
+}

@@ -1,0 +1,40 @@
+name: GitHub release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.13.1
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Verify release state
+        run: pnpm verify
+      - name: Pack public packages
+        run: |
+          mkdir release-artifacts
+          pnpm --filter typed-policy-core pack --pack-destination ../../release-artifacts
+          pnpm --filter typed-policy-react pack --pack-destination ../../release-artifacts
+          pnpm --filter typed-policy-express pack --pack-destination ../../release-artifacts
+          pnpm --filter typed-policy-testkit pack --pack-destination ../../release-artifacts
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" release-artifacts/*.tgz --generate-notes --verify-tag

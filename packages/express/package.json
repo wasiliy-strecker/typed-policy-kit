@@ -1,0 +1,55 @@
+{
+  "name": "typed-policy-express",
+  "version": "0.1.0",
+  "description": "Express 5 enforcement middleware for typed-policy-core",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wasiliy-strecker/typed-policy-kit.git",
+    "directory": "packages/express"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --sourcemap --clean --external express --external typed-policy-core",
+    "lint": "eslint src test",
+    "pack:check": "publint && attw --pack .",
+    "test": "vitest run --coverage",
+    "test:types": "tsd",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "typed-policy-core": "workspace:*"
+  },
+  "peerDependencies": {
+    "express": ">=5.0.0 <6.0.0"
+  },
+  "devDependencies": {
+    "express": "^5.2.1",
+    "supertest": "^7.2.2"
+  }
+}
