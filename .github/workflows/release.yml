@@ -30,10 +30,11 @@ jobs:
       - name: Pack public packages
         run: |
           mkdir release-artifacts
-          pnpm --filter typed-policy-core pack --pack-destination ../../release-artifacts
-          pnpm --filter typed-policy-react pack --pack-destination ../../release-artifacts
-          pnpm --filter typed-policy-express pack --pack-destination ../../release-artifacts
-          pnpm --filter typed-policy-testkit pack --pack-destination ../../release-artifacts
+          pnpm --filter typed-policy-core pack --pack-destination release-artifacts
+          pnpm --filter typed-policy-react pack --pack-destination release-artifacts
+          pnpm --filter typed-policy-express pack --pack-destination release-artifacts
+          pnpm --filter typed-policy-testkit pack --pack-destination release-artifacts
+          test "$(find release-artifacts -maxdepth 1 -type f -name '*.tgz' | wc -l)" -eq 4
       - name: Create GitHub release
         uses: softprops/action-gh-release@v3
         with:
