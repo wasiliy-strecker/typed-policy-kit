@@ -37,7 +37,7 @@
     "@types/supertest": "^7.2.1",
     "@vitejs/plugin-react": "^6.0.3",
     "@vitest/coverage-v8": "^4.1.10",
-    "concurrently": "^9.2.1",
+    "concurrently": "^10.0.3",
     "eslint": "^9.39.2",
     "fast-check": "^4.9.0",
     "jsdom": "^29.1.1",
